@@ -10,6 +10,8 @@ export default {
    */
   port: parseInt(process.env.PORT || "3000", 10),
 
+  temp_folder_path: process.env.TEMP_FOLDER_PATH || "./temp/",
+
   /**
    * Used by winston logger
    */
@@ -21,6 +23,6 @@ export default {
    * API configs
    */
   api: {
-    prefix: "/v1/api",
+    prefix: "/api/v1",
   },
 };
