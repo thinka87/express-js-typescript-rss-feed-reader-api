@@ -1,6 +1,5 @@
 import Parser from "rss-parser";
 import fs from "fs";
-import download from "download";
 import * as FileHelper from "../utils/FileHelper";
 import * as Validator from "../utils/Validator";
 import config from "../config";
@@ -37,20 +36,13 @@ class RSSFeed {
       throw new Error("Invalid URI");
     }
     try {
+
       const fileName = this.fileHelper.makeFileName(10);
       const path = `${config.temp_folder_path}${fileName}.mp3`;
-
-      const f = await fetch(uri);
-      console.log(f);
-      // const res = await download(uri, path);
-      //const download = fs.createWriteStream(path.join(__dirname, 'books_dir', uri));
-
-      const file = await fs.readFileSync(uri);
-      console.log("---------", file);
-      // const tags = await this.fileHelper.readTagsFromFile(file);
-      //fs.unlinkSync(path);
-
-      return [];
+      const filedownload = await this.fileHelper.downloadFile(uri, path);
+      const taginfo = await this.fileHelper.readTagsFromFile(path);
+      fs.unlinkSync(path);
+      return taginfo ;
     } catch (e) {
       console.log(e);
       throw new Error(

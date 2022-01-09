@@ -1,10 +1,10 @@
 import crypto from "crypto";
-import https from "https";
+import download from "download";
 import fs from "fs";
 import NodeID3 from "node-id3";
 
 export const readTagsFromFile = async (file) => {
-  return NodeID3.read(file);
+  return   NodeID3.read(file);
 };
 
 export const makeFileName = (length: number): string => {
@@ -25,13 +25,6 @@ export const generateChecksum = (str, algorithm, encoding) => {
     .digest(encoding || "hex");
 };
 
-export const downloadFile = (URL, savePath, cb) => {
-  https.get(URL, (res) => {
-    const filePath = fs.createWriteStream(savePath);
-    res.pipe(filePath);
-
-    filePath.on("finish", () => {
-      filePath.close(cb);
-    });
-  });
+export const downloadFile = async (URL, savePath) => {
+  return fs.writeFileSync(savePath, await download(URL));
 };
