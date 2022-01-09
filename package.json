@@ -4,7 +4,6 @@
   "description": "Acast assignment by thilina wijesinghe",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js",
     "dev": "nodemon"
   },
   "author": "Thilina Wijesinghe",

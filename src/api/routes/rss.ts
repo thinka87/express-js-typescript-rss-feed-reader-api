@@ -6,18 +6,18 @@ const route = Router();
 export default (app: Router): void => {
   app.use("/rss", route);
 
-  route.get("/feed/:url", async (req: Request, res: Response) => {
+  route.get("/feed", async (req: Request, res: Response) => {
     try {
-      const data = RSSService.feedByURL(req.params.url);
+      const data = await RSSService.feedByURL(req.query.q as string);
       return SuccessResponse(res, data, null, 200);
     } catch (e) {
       //@todo - Log error
       return ErrorResponse(res, { message: "Error in fetching URL" }, 400);
     }
   });
-  route.get("/tag/:url", async (req: Request, res: Response) => {
+  route.get("/tag", async (req: Request, res: Response) => {
     try {
-      const data = RSSService.getTagInfo(req.params.url);
+      const data = await RSSService.getTagInfo(req.query.q as string);
       return SuccessResponse(res, data, null, 200);
     } catch (e) {
       //@todo - Log error
