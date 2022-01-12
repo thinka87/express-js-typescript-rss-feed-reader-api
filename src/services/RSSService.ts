@@ -20,10 +20,14 @@ class RSSFeed {
     }
     try {
       const feed = await this.parser.parseURL(uri);
-      return feed?.items?.map((item) => {
-        const checksum = this.fileHelper.generateChecksum(item.enclosure.url);
+      
+      const results = await Promise.all(feed?.items?.map(async (item): Promise<object>  => {
+        const checksum = await this.fileHelper.getChecksum(item.enclosure.url);
         return { title: item.title, checksum: checksum, url: item.link };
-      });
+      }));
+      
+      return results;
+
     } catch (e) {
       throw new Error(
         "Error occurred while fetching feed URI, Please try again"
