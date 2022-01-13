@@ -6,7 +6,7 @@ import Logger from "../src/utils/logger";
 
 async function startServer() {
   const app = express();
-
+  app.use(require('express-status-monitor')());
  
   await require("./loaders").default({ expressApp: app });
 

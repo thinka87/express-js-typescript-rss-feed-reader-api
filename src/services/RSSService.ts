@@ -19,8 +19,7 @@ class RSSFeed {
       throw new Error("Invalid URI");
     }
     try {
-      const feed = await this.parser.parseURL(uri);
-      
+      const feed = await this.parser.parseURL(uri);     
       const results = await Promise.all(feed?.items?.map(async (item): Promise<object>  => {
         const checksum = await this.fileHelper.getChecksum(item.enclosure.url);
         return { title: item.title, checksum: checksum, url: item.link };

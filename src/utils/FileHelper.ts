@@ -3,22 +3,29 @@ import download from "download";
 import fs from "fs";
 import NodeID3 from "node-id3";
 import config from "../config";
+import request from "request" ;
+const fetch = require('node-fetch');
 
 export const readTagsFromFile = async (file) => {
   return   NodeID3.read(file);
 };
 
 export const getChecksum = async (fileurl) => {
-  
-        const fileName =  makeFileName(10);
-        const path =  `${config.temp_folder_path}${fileName}.mp3`;
-        await downloadFile(fileurl ,path);
-        const fileData=  fs.readFileSync(path);
-        const chksum =await generateChecksum(fileData);
-        fs.unlink(path,(err) =>{
-          console.log(`File deleted : ${path},` );
-        });
-        return chksum;
+
+  const fileName =  makeFileName(10);
+  const path =  `${config.temp_folder_path}${fileName}.mp3`;
+  await downloadFile(fileurl ,path);
+  const fileData=  fs.readFileSync(path);
+  const chksum =await generateChecksum(fileData);
+  fs.unlink(path,(err) =>{
+    console.log(`File deleted : ${path},` );
+  });
+  return chksum;
+
+  //const response = await fetch(fileurl);
+  //const buffer = await response.buffer();
+  //return generateChecksum(buffer.toString());
+     
 };
 
 
