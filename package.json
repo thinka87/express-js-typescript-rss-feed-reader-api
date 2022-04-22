@@ -1,7 +1,7 @@
 {
-  "name": "acast-assignment",
+  "name": "express-js-typescript-with-api",
   "version": "1.0.0",
-  "description": "Acast assignment by thilina wijesinghe",
+  "description": "express-js-typescript-with-api",
   "main": "index.js",
   "scripts": {
     "build": "tsc -p .",
